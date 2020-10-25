@@ -27,7 +27,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin:admin@cluster0.kla77.mongodb.net/userDB", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.SRV, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
 const userSchema = new mongoose.Schema({
@@ -170,8 +170,13 @@ app.post("/login", (req, res) => {
 })
 
 
-app.listen(3000, () => {
-    console.log("server started at port 3000 sucessfully");
-})
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
+
+app.listen(port, function () {
+    console.log("Server has started succesfully");
+});
 
 
